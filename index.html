@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMSF Expert - Self Managed Super Funds Information</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding-top: 80px;
+            background-color: #f8f9fa;
+        }
+        
+        .language-switcher {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+            font-weight: 500;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 15px;
+            margin: 30px 0;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+        
+        .calculator-form {
+            background-color: var(--light-color);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .result-table {
+            overflow-x: auto;
+        }
+        
+        .qa-item {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .case-item {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .lang-zh {
+            display: none;
+        }
+        
+        .page-section {
+            display: none;
+        }
+        
+        #home {
+            display: block;
+        }
+        
+        .tab-pane {
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button id="lang-en" class="btn btn-sm btn-light active">English</button>
+        <button id="lang-zh" class="btn btn-sm btn-light">中文</button>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>SMSF Expert
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home"><i class="fas fa-home me-1"></i> <span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#qa"><i class="fas fa-question-circle me-1"></i> <span class="lang-en">Top Q&A</span><span class="lang-zh">常见问题</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#advantages"><i class="fas fa-balance-scale me-1"></i> <span class="lang-en">Advantages</span><span class="lang-zh">优缺点</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cases"><i class="fas fa-gavel me-1"></i> <span class="lang-en">Hot Cases</span><span class="lang-zh">热门案例</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#calculator"><i class="fas fa-calculator me-1"></i> <span class="lang-en">Calculator</span><span class="lang-zh">财富计算器</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page-section">
+        <div class="hero">
+            <div class="container text-center">
+                <h1 class="lang-en">Self Managed Super Funds Information</h1>
+                <h1 class="lang-zh">自管理养老基金信息</h1>
+                <p class="lead lang-en">Your complete guide to understanding and managing your SMSF</p>
+                <p class="lead lang-zh">全面了解和管理自管理养老基金的指南</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title lang-en">Why This Website?</h3>
+                            <h3 class="card-title lang-zh">为什么创建本网站？</h3>
+                            <p class="lang-en">We created this website to help people with zero knowledge quickly understand SMSFs. Our AI-powered tracking system monitors updates from ATO, court cases, and SMSF association guidance to provide you with the most current information.</p>
+                            <p class="lang-zh">我们创建本网站是为了帮助零基础的人快速了解自管理养老基金。我们的人工智能跟踪系统监控澳大利亚税务局、法院案例和SMSF协会的更新，为您提供最新信息。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title lang-en">SMSF History</h3>
+                            <h3 class="card-title lang-zh">SMSF历史</h3>
+                            <p class="lang-en">SMSFs have been part of Australia's superannuation system since the early 1980s. Today, they represent the largest segment of the superannuation industry by number of funds and total assets.</p>
+                            <p class="lang-zh">自管理养老基金自1980年代初就成为澳大利亚养老金体系的一部分。如今，按基金数量和总资产计算，它们代表了养老金行业中最大的部分。</p>
+                            <a href="https://www.smsfassociation.com" class="btn btn-outline-primary mt-2 lang-en">SMSF Association</a>
+                            <a href="https://www.smsfassociation.com" class="btn btn-outline-primary mt-2 lang-zh">SMSF协会</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title lang-en">Key Organizations</h3>
+                            <h3 class="card-title lang-zh">主要机构</h3>
+                            <p class="lang-en">The main regulators and organizations in the Australian SMSF space include the ATO, APRA, and the SMSF Association. Each plays a vital role in regulation, guidance, and support.</p>
+                            <p class="lang-zh">澳大利亚自管理养老基金领域的主要监管机构和组织包括澳大利亚税务局、审慎监管局和SMSF协会。每个机构在监管、指导和支持方面都发挥着重要作用。</p>
+                            <div class="d-flex gap-2 mt-3">
+                                <a href="https://www.ato.gov.au" class="btn btn-sm btn-outline-primary lang-en">ATO</a>
+                                <a href="https://www.ato.gov.au" class="btn btn-sm btn-outline-primary lang-zh">税务局</a>
+                                <a href="https://www.apra.gov.au" class="btn btn-sm btn-outline-primary lang-en">APRA</a>
+                                <a href="https://www.apra.gov.au" class="btn btn-sm btn-outline-primary lang-zh">审慎监管局</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Q&A Page -->
+    <section id="qa" class="page-section py-5">
+        <div class="container">
+            <h2 class="section-title lang-en">Top Questions & Answers</h2>
+            <h2 class="section-title lang-zh">常见问题与解答</h2>
+
+            <ul class="nav nav-tabs mb-4">
+                <li class="nav-item">
+                    <a class="nav-link active lang-en" data-bs-toggle="tab" href="#who">Who Can Set Up</a>
+                    <a class="nav-link active lang-zh" data-bs-toggle="tab" href="#who">谁能建立</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link lang-en" data-bs-toggle="tab" href="#why">Why Set Up</a>
+                    <a class="nav-link lang-zh" data-bs-toggle="tab" href="#why">为什么建立</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link lang-en" data-bs-toggle="tab" href="#how">How to Set Up</a>
+                    <a class="nav-link lang-zh" data-bs-toggle="tab" href="#how">如何建立</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link lang-en" data-bs-toggle="tab" href="#manage">How to Manage</a>
+                    <a class="nav-link lang-zh" data-bs-toggle="tab" href="#manage">如何管理</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="who">
+                    <div class="qa-item">
+                        <h4 class="lang-en">1. What are the basic requirements to set up an SMSF?</h4>
+                        <h4 class="lang-zh">1. 建立SMSF的基本要求是什么？</h4>
+                        <p class="lang-en">You must be an Australian resident, at least 18 years old, and have a clear understanding of your responsibilities as a trustee. The fund must have less than 5 members, all of whom are trustees.</p>
+                        <p class="lang-zh">您必须是澳大利亚居民，年满18岁，并清楚了解作为受托人的责任。基金必须少于5名成员，所有成员都必须是受托人。</p>
+                        <a href="https://www.ato.gov.au/Super/SuperFunds/" class="btn btn-sm btn-outline-primary lang-en">ATO Resources</a>
+                        <a href="https://www.ato.gov.au/Super/SuperFunds/" class="btn btn-sm btn-outline-primary lang-zh">税务局资源</a>
+                    </div>
+                    <div class="qa-item">
+                        <h4 class="lang-en">2. Can non-residents set up an SMSF?</h4>
+                        <h4 class="lang-zh">2. 非居民可以建立SMSF吗？</h4>
+                        <p class="lang-en">Generally, non-residents cannot set up new SMSFs. However, if you become a non-resident after establishing an SMSF, you can continue maintaining it, but there may be tax implications.</p>
+                        <p class="lang-zh">通常，非居民不能建立新的SMSF。但是，如果您在建立SMSF后成为非居民，可以继续维护它，但可能会产生税务影响。</p>
+                        <a href="https://www.ato.gov.au/Individuals/International-tax-for-individuals/" class="btn btn-sm btn-outline-primary lang-en">ATO International Tax</a>
+                        <a href="https://www.ato.gov.au/Individuals/International-tax-for-individuals/" class="btn btn-sm btn-outline-primary lang-zh">税务局国际税收</a>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="why">
+                    <div class="qa-item">
+                        <h4 class="lang-en">1. What are the benefits of having an SMSF?</h4>
+                        <h4 class="lang-zh">1. 拥有SMSF有什么好处？</h4>
+                        <p class="lang-en">SMSFs offer greater control over investment decisions, potential tax advantages, flexibility in estate planning, and the ability to hold unique assets like property and collectibles within your super fund.</p>
+                        <p class="lang-zh">SMSF提供对投资决策的更大控制权、潜在的税收优势、遗产规划的灵活性，以及能够在养老基金中持有房产和收藏品等独特资产。</p>
+                        <a href="https://www.smsfassociation.com" class="btn btn-sm btn-outline-primary lang-en">SMSF Association</a>
+                        <a href="https://www.smsfassociation.com" class="btn btn-sm btn-outline-primary lang-zh">SMSF协会</a>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="how">
+                    <div class="qa-item">
+                        <h4 class="lang-en">1. What is the process to establish an SMSF?</h4>
+                        <h4 class="lang-zh">1. 建立SMSF的流程是什么？</h4>
+                        <p class="lang-en">The process involves creating a trust deed, appointing trustees, registering with the ATO, obtaining an ABN and TFN, setting up a bank account, and creating an investment strategy.</p>
+                        <p class="lang-zh">流程包括创建信托契约、任命受托人、在税务局注册、获得ABN和TFN、设立银行账户以及制定投资策略。</p>
+                        <a href="https://www.ato.gov.au/Super/Self-managed-super-funds/" class="btn btn-sm btn-outline-primary lang-en">ATO Guide</a>
+                        <a href="https://www.ato.gov.au/Super/Self-managed-super-funds/" class="btn btn-sm btn-outline-primary lang-zh">税务局指南</a>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="manage">
+                    <div class="qa-item">
+                        <h4 class="lang-en">1. What are the ongoing compliance requirements?</h4>
+                        <h4 class="lang-zh">1. 持续的合规要求是什么？</h4>
+                        <p class="lang-en">SMSF trustees must prepare financial statements, arrange an annual audit, lodge annual returns with the ATO, review and update the investment strategy, and keep comprehensive records for at least 5 years.</p>
+                        <p class="lang-zh">SMSF受托人必须准备财务报表、安排年度审计、向税务局提交年度报表、审查和更新投资策略，并保存至少5年的全面记录。</p>
+                        <a href="https://www.ato.gov.au/Super/Self-managed-super-funds/" class="btn btn-sm btn-outline-primary lang-en">ATO Compliance</a>
+                        <a href="https://www.ato.gov.au/Super/Self-managed-super-funds/" class="btn btn-sm btn-outline-primary lang-zh">税务局合规</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages & Disadvantages Page -->
+    <section id="advantages" class="page-section py-5">
+        <div class="container">
+            <h2 class="section-title lang-en">Advantages & Disadvantages</h2>
+            <h2 class="section-title lang-zh">优点与缺点</h2>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0 lang-en">Advantages</h4>
+                            <h4 class="mb-0 lang-zh">优点</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="qa-item">
+                                <h5 class="lang-en">1. Investment Control</h5>
+                                <h5 class="lang-zh">1. 投资控制</h5>
+                                <p class="lang-en">You have full control over investment decisions and can choose from a wider range of assets including direct property, shares, and collectibles.</p>
+                                <p class="lang-zh">您完全控制投资决策，可以选择更广泛的资产，包括直接房产、股票和收藏品。</p>
+                            </div>
+                            <div class="qa-item">
+                                <h5 class="lang-en">2. Tax Efficiency</h5>
+                                <h5 class="lang-zh">2. 税收效率</h5>
+                                <p class="lang-en">SMSFs can be more tax-efficient through strategies like capital gains tax management and pension phase planning.</p>
+                                <p class="lang-zh">通过资本利得税管理和养老金阶段规划等策略，SMSF可以更节税。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-danger text-white">
+                            <h4 class="mb-0 lang-en">Disadvantages</h4>
+                            <h4 class="mb-0 lang-zh">缺点</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="qa-item">
+                                <h5 class="lang-en">1. Time Commitment</h5>
+                                <h5 class="lang-zh">1. 时间投入</h5>
+                                <p class="lang-en">Managing an SMSF requires significant time for research, record-keeping, and compliance activities. It's not suitable for those unwilling to devote time.</p>
+                                <p class="lang-zh">管理SMSF需要大量时间进行研究、记录保存和合规活动。不适合不愿意投入时间的人。</p>
+                            </div>
+                            <div class="qa-item">
+                                <h5 class="lang-en">2. Compliance Risks</h5>
+                                <h5 class="lang-zh">2. 合规风险</h5>
+                                <p class="lang-en">Trustees are personally responsible for compliance. Mistakes can lead to severe penalties, loss of tax benefits, or fund non-compliance.</p>
+                                <p class="lang-zh">受托人个人对合规负责。错误可能导致严厉处罚、税收优惠损失或基金不合规。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hot Cases Page -->
+    <section id="cases" class="page-section py-5">
+        <div class="container">
+            <h2 class="section-title lang-en">Hot Court Cases</h2>
+            <h2 class="section-title lang-zh">热门法庭案例</h2>
+
+            <div class="case-item">
+                <h4 class="lang-en">1. Cooper v Commissioner of Taxation [2019] FCAFC 77</h4>
+                <h4 class="lang-zh">1. Cooper诉税务局委员案 [2019] FCAFC 77</h4>
+                <p class="lang-en">This case clarified the definition of 'business activity' for SMSF purposes. The court ruled that regular and systematic activities aimed at profit constitute business activity, even if conducted on a small scale. This has implications for what SMSFs can legitimately invest in and how activities are classified for tax purposes.</p>
+                <p class="lang-zh">该案澄清了SMSF目的下"商业活动"的定义。法院裁定，旨在盈利的定期和系统性活动构成商业活动，即使小规模进行。这对SMSF可以合法投资什么以及如何为税务目的对活动进行分类具有影响。</p>
+                <a href="https://www.judgments.fedcourt.gov.au" class="btn btn-sm btn-outline-primary lang-en">Case Details</a>
+                <a href="https://www.judgments.fedcourt.gov.au" class="btn btn-sm btn-outline-primary lang-zh">案例详情</a>
+            </div>
+
+            <div class="case-item">
+                <h4 class="lang-en">2. Aussiegolfa v Commissioner of Taxation [2018] FCAFC 122</h4>
+                <h4 class="lang-zh">2. Aussiegolfa诉税务局委员案 [2018] FCAFC 122</h4>
+                <p class="lang-en">This case dealt with the in-house asset rules and related party transactions. The Full Federal Court provided important guidance on what constitutes an investment in a related trust and how the in-house asset rules apply to investments between an SMSF and related parties.</p>
+                <p class="lang-zh">该案涉及内部资产规则和相关方交易。联邦法院全席法庭就什么构成对相关信托的投资以及内部资产规则如何适用于SMSF和相关方之间的投资提供了重要指导。</p>
+                <a href="https://www.judgments.fedcourt.gov.au" class="btn btn-sm btn-outline-primary lang-en">Case Details</a>
+                <a href="https://www.judgments.fedcourt.gov.au" class="btn btn-sm btn-outline-primary lang-zh">案例详情</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wealth Calculator Page -->
+    <section id="calculator" class="page-section py-5">
+        <div class="container">
+            <h2 class="section-title lang-en">Wealth Calculator</h2>
+            <h2 class="section-title lang-zh">财富计算器</h2>
+
+            <div class="calculator-form">
+                <form id="calculator-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Current Age</label>
+                                <label class="form-label lang-zh">当前年龄</label>
+                                <input type="number" class="form-control" id="current-age" min="18" max="65" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Current Super Balance ($)</label>
+                                <label class="form-label lang-zh">当前养老金余额 ($)</label>
+                                <input type="number" class="form-control" id="super-balance" min="0" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Income Before Tax ($)</label>
+                                <label class="form-label lang-zh">税前收入 ($)</label>
+                                <input type="number" class="form-control" id="income" min="0" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Personal Concessional Contribution ($)</label>
+                                <label class="form-label lang-zh">个人税前贡献 ($)</label>
+                                <input type="number" class="form-control" id="personal-contribution" min="0" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Non-Concessional Contribution ($)</label>
+                                <label class="form-label lang-zh">个人税后贡献 ($)</label>
+                                <input type="number" class="form-control" id="non-concessional" min="0" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Estimated Investment Return (%)</label>
+                                <label class="form-label lang-zh">预计投资回报率 (%)</label>
+                                <input type="number" class="form-control" id="investment-return" step="0.1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Retirement Age (≥60)</label>
+                                <label class="form-label lang-zh">退休年龄 (≥60)</label>
+                                <input type="number" class="form-control" id="retirement-age" min="60" max="99" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label lang-en">Annual Living Spending in Retirement ($)</label>
+                                <label class="form-label lang-zh">退休后年生活支出 ($)</label>
+                                <input type="number" class="form-control" id="living-spending" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 lang-en">Calculate</button>
+                    <button type="submit" class="btn btn-primary w-100 lang-zh">计算</button>
+                </form>
+            </div>
+
+            <div id="warning-alert" class="alert alert-warning alert-dismissible fade show" role="alert" style="display: none;">
+                <strong class="lang-en">Warning!</strong><strong class="lang-zh">警告！</strong>
+                <span class="lang-en">Total concessional contribution exceeds the annual cap. Please adjust your contributions.</span>
+                <span class="lang-zh">总税前贡献超过了年度上限。请调整您的贡献金额。</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <div id="results" style="display: none;">
+                <h3 class="mb-4 lang-en">Projection Results</h3>
+                <h3 class="mb-4 lang-zh">预测结果</h3>
+                
+                <div class="result-table">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="lang-en">Year</th>
+                                <th class="lang-zh">年份</th>
+                                <th class="lang-en">Age</th>
+                                <th class="lang-zh">年龄</th>
+                                <th class="lang-en">Income</th>
+                                <th class="lang-zh">收入</th>
+                                <th class="lang-en">Contributions</th>
+                                <th class="lang-zh">贡献</th>
+                                <th class="lang-en">Investment Return</th>
+                                <th class="lang-zh">投资回报</th>
+                                <th class="lang-en">Tax</th>
+                                <th class="lang-zh">税收</th>
+                                <th class="lang-en">Net Balance</th>
+                                <th class="lang-zh">净余额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body">
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="lang-en">SMSF Expert</h5>
+                    <h5 class="lang-zh">SMSF专家</h5>
+                    <p class="lang-en">Providing the latest information on Self Managed Super Funds in Australia.</p>
+                    <p class="lang-zh">提供澳大利亚自管理养老基金的最新信息。</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="lang-en">Quick Links</h5>
+                    <h5 class="lang-zh">快速链接</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white lang-en">Home</a><a href="#home" class="text-white lang-zh">首页</a></li>
+                        <li><a href="#qa" class="text-white lang-en">Top Q&A</a><a href="#qa" class="text-white lang-zh">常见问题</a></li>
+                        <li><a href="#advantages" class="text-white lang-en">Advantages</a><a href="#advantages" class="text-white lang-zh">优缺点</a></li>
+                        <li><a href="#cases" class="text-white lang-en">Hot Cases</a><a href="#cases" class="text-white lang-zh">热门案例</a></li>
+                        <li><a href="#calculator" class="text-white lang-en">Calculator</a><a href="#calculator" class="text-white lang-zh">计算器</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="lang-en">Resources</h5>
+                    <h5 class="lang-zh">资源</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.ato.gov.au" class="text-white">ATO</a></li>
+                        <li><a href="https://www.apra.gov.au" class="text-white">APRA</a></li>
+                        <li><a href="https://www.smsfassociation.com" class="text-white">SMSF Association</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1);">
+            <p class="text-center mb-0 lang-en">© 2023 SMSF Expert. All rights reserved.</p>
+            <p class="text-center mb-0 lang-zh">© 2023 SMSF专家。保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Language switching functionality with persistence
+        function setLanguage(lang) {
+            if (lang === 'zh') {
+                document.querySelectorAll('.lang-en').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'block');
+                document.getElementById('lang-en').classList.remove('active');
+                document.getElementById('lang-zh').classList.add('active');
+                localStorage.setItem('language', 'zh');
+            } else {
+                document.querySelectorAll('.lang-en').forEach(el => el.style.display = 'block');
+                document.querySelectorAll('.lang-zh').forEach(el => el.style.display = 'none');
+                document.getElementById('lang-en').classList.add('active');
+                document.getElementById('lang-zh').classList.remove('active');
+                localStorage.setItem('language', 'en');
+            }
+        }
+
+        // Check for saved language preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLanguage = localStorage.getItem('language');
+            if (savedLanguage === 'zh') {
+                setLanguage('zh');
+            } else {
+                setLanguage('en');
+            }
+
+            // Add event listeners for language buttons
+            document.getElementById('lang-en').addEventListener('click', function() {
+                setLanguage('en');
+            });
+
+            document.getElementById('lang-zh').addEventListener('click', function() {
+                setLanguage('zh');
+            });
+
+            // Navigation functionality
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Hide all pages
+                    document.querySelectorAll('.page-section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show the selected page
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).style.display = 'block';
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+
+            // Calculator functionality
+            document.getElementById('calculator-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get input values
+                const currentAge = parseInt(document.getElementById('current-age').value);
+                const superBalance = parseFloat(document.getElementById('super-balance').value);
+                const income = parseFloat(document.getElementById('income').value);
+                const personalContribution = parseFloat(document.getElementById('personal-contribution').value);
+                const nonConcessional = parseFloat(document.getElementById('non-concessional').value);
+                const investmentReturn = parseFloat(document.getElementById('investment-return').value) / 100;
+                const retirementAge = parseInt(document.getElementById('retirement-age').value);
+                const livingSpending = parseFloat(document.getElementById('living-spending').value);
+                
+                // Check concessional contribution cap (2025-2026 values)
+                const employmentContribution = income * 0.11; // Assuming 11% employer contribution
+                const concessionalCap = 27500; // Example cap for 2025-2026
+                
+                if (employmentContribution + personalContribution > concessionalCap) {
+                    document.getElementById('warning-alert').style.display = 'block';
+                    return;
+                } else {
+                    document.getElementById('warning-alert').style.display = 'none';
+                }
+                
+                // Calculate projection
+                let balance = superBalance;
+                const resultsBody = document.getElementById('results-body');
+                resultsBody.innerHTML = '';
+                
+                for (let age = currentAge; age <= 99; age++) {
+                    // Simplified calculation for demonstration
+                    const year = age - currentAge + 2023;
+                    const isWorking = age < retirementAge;
+                    
+                    // Calculate values for this year
+                    const yearIncome = isWorking ? income * Math.pow(1.02, age - currentAge) : 0;
+                    const yearEmploymentContribution = isWorking ? yearIncome * 0.11 : 0;
+                    const yearPersonalContribution = isWorking ? personalContribution * Math.pow(1.02, age - currentAge) : 0;
+                    const yearNonConcessional = isWorking ? nonConcessional * Math.pow(1.02, age - currentAge) : 0;
+                    const yearInvestmentReturn = balance * investmentReturn;
+                    const yearTax = isWorking ? (yearInvestmentReturn * 0.15) : (yearInvestmentReturn * 0.1);
+                    const yearSpending = age >= retirementAge ? livingSpending * Math.pow(1.02, age - retirementAge) : 0;
+                    
+                    // Update balance
+                    balance = balance + yearEmploymentContribution + yearPersonalContribution + 
+                             yearNonConcessional + yearInvestmentReturn - yearTax - yearSpending;
+                    
+                    // Add row to results table
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${year}</td>
+                        <td>${age}</td>
+                        <td>$${yearIncome.toFixed(2)}</td>
+                        <td>$${(yearEmploymentContribution + yearPersonalContribution + yearNonConcessional).toFixed(2)}</td>
+                        <td>$${yearInvestmentReturn.toFixed(2)}</td>
+                        <td>$${yearTax.toFixed(2)}</td>
+                        <td>$${balance.toFixed(2)}</td>
+                    `;
+                    resultsBody.appendChild(row);
+                }
+                
+                // Show results
+                document.getElementById('results').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
